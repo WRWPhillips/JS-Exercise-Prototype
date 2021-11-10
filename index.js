@@ -7,6 +7,8 @@
         + If a plane lands, its `isFlying` property is set to false.
 */
 
+const { BOOLEAN_BINARY_OPERATORS } = require("@babel/types");
+
 // EXAMPLE SOLUTION CODE:
 function Airplane(name) {
   this.name = name;
@@ -39,15 +41,41 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-  
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
 }
 
+Person.prototype.eat = function(edible){
+  if(this.stomach.length < 10){
+    this.stomach.push(edible);
+  }
+}
 
+Person.prototype.poop = function(){
+  this.stomach = [];
+}
 
+Person.prototype.toString = function(){
+  return `${this.name}, ${this.age}`;
+}
 
+const kyler = new Person('Kyler', 25);
+const ben = new Person('Bennett', 28);
 
+console.log(kyler.toString());
+console.log(ben.toString());
 
+ben.eat['horse apple'];
+ben.eat['almond'];
+ben.eat['tripe'];
+ben.eat['apple'];
+ben.eat['meatpie'];
+ben.eat['eel sauce'];
+ben.eat['grapefruit'];
+
+console.log(ben.stomach);
 
 /*
   TASK 2
@@ -63,9 +91,33 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-  
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
 }
+Car.prototype.fill = function(gallons) {
+  this.tank = this.tank + gallons; // try += in a second // did not work
+}
+
+Car.prototype.drive = function(distance) {
+  if(this.tank <= distance / this.milesPerGallon){
+    let maxDistance = this.tank * this.milesPerGallon;
+    this.odometer = this.odometer + maxDistance;
+    this.tank = 0;
+    console.log(`I ran out of fuel at ${this.odometer} miles!`)
+  } else {
+  this.odometer = this.odometer + distance;
+  this.tank = this.tank - distance / this.milesPerGallon;
+  }
+}
+const newCar = new Car('altima', '33');
+newCar.fill(15);
+newCar.drive(360);
+console.log(newCar);
+newCar.drive(250);
+console.log(newCar);
 
 
 /*
@@ -75,9 +127,19 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
- 
+function Baby(name, age, toy) {
+ Person.call(this, name, age, toy); 
+ this.favoriteToy = toy;
 }
+Baby.prototype = Object.create(Person.prototype);
+
+Baby.prototype.play = function(){
+  return `Playing with ${this.favoriteToy}`;
+}
+
+const myBaby = new Baby('lucy', 5, 'trains');
+console.log(myBaby);
+
 
 
 /* 
