@@ -129,7 +129,7 @@ console.log(newCar);
 */
 function Baby(name, age, toy) {
  Person.call(this, name, age, toy); 
- this.favoriteToy = toy;
+ this.favoriteToy = toy
 }
 Baby.prototype = Object.create(Person.prototype);
 
@@ -145,10 +145,10 @@ console.log(myBaby);
 /* 
   TASK 4
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Global Binding is a mistake, basically. whenever you don't properly define the scope of this is attaches to the window/console obj. Doesn't happen in strict mode.
+  2. Whenever a function is called by a preceding dot, the object left of the dot gets 'this', that's implicit binding, basically a way of referencing things
+  3. New Binding is used in constructor functions, it's the use of this to refer to the instance in an object that is created.
+  4. Explicit binding is the use of .bind, .call, and .apply to use this, explicitly defining what it refers to and does
 */
 
 
